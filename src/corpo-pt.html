@@ -1,0 +1,160 @@
+<nav><div class="wrap">
+  <a class="brand" href="#top"><span class="emoji">🗄️</span> camada-contexto</a>
+  <span class="sep">|</span>
+  <span class="clubpro">
+    <a class="inema" href="https://inema.club" target="_blank" rel="noopener">INEMA.CLUB</a>
+    <span class="sep">-</span>
+    <a class="pro" href="https://inema.pro" target="_blank" rel="noopener">PRO</a>
+  </span>
+  <div class="links">
+    <a class="sec" href="#oque">O que é</a>
+    <a class="sec" href="#guia">Passos</a>
+    <a class="sec" href="#teste">Teste</a>
+    <a class="sec" href="#video">Vídeo</a>
+    <span class="lang"><a class="on" href="./">PT</a><a href="en/">EN</a><a href="es/">ES</a></span>
+    <button class="tgl" id="themeToggle" aria-label="Alternar tema" title="Alternar tema">🌙</button>
+    <a class="btn" href="https://github.com/inematds/camada-contexto" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</div></nav>
+
+<header class="hero" id="top">
+  <div class="glow"></div>
+  <div class="wrap">
+    <div>
+      <span class="chip">Claude + Codex · um contexto só</span>
+      <h1>Seu contexto num lugar só, que é <span class="amb">seu</span></h1>
+      <p class="lead">Claude, Codex ou o próximo modelo trabalham com o mesmo contexto. Quando sair uma IA melhor, você só pluga.</p>
+      <div class="cta">
+        <a class="btn" href="#guia">Montar a minha camada</a>
+        <a class="btn ghost" href="https://github.com/inematds/camada-contexto" target="_blank" rel="noopener">Ver no GitHub</a>
+      </div>
+    </div>
+    <figure><img src="assets/banner.jpg" alt="Banner: camada de contexto — o seu negócio num lugar só, que qualquer IA lê"></figure>
+  </div>
+</header>
+
+<section id="resumo" class="resumo"><div class="wrap">
+  <span class="chip">Em resumo</span>
+  <p>Este é um kit grátis para guardar o contexto do seu negócio (o que você faz, a sua voz, o seu público, as suas regras) num repositório privado que é seu, e não dentro de um app de IA. O Claude e o ChatGPT/Codex leem e escrevem nesse mesmo lugar, então você não fica com duas cópias que se desencontram nem preso a uma empresa. O kit traz a estrutura de pastas, um bloco único de instruções para os dois apps, prompts prontos e um verificador que barra senha e banco de dados antes do envio. Para usar, basta uma conta grátis no GitHub e o Claude ou o ChatGPT.</p>
+</div></section>
+
+<section id="oque"><div class="wrap">
+  <span class="chip">O que é</span>
+  <h2>Três camadas, uma só é sua</h2>
+  <p class="sub">Os apps de IA agora trabalham na nuvem deles. Ótimo para ficar ligado o tempo todo; ruim quando o seu contexto fica preso lá dentro.</p>
+  <figure style="margin:0 0 26px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000"><img src="assets/banner-grade.jpg" alt="Os passos: três camadas, arquivos e dados, onde guardar, montar, ligar os dois e o teste" loading="lazy" style="width:100%;display:block"></figure>
+  <div class="grid g3">
+    <div class="card"><h3>🤖 Em cima: a IA</h3><p>Onde o trabalho roda: Claude, Codex ou a próxima IA. Ela muda; o resto fica.</p></div>
+    <div class="card"><h3>🌉 No meio: a ponte</h3><p>Git, conector MCP ou API. Cada app precisa da sua própria permissão para passar.</p></div>
+    <div class="card"><h3>🗄️ Embaixo: o que é seu</h3><p>Os arquivos do seu negócio, num repositório privado. Troque a IA, mantenha a fonte.</p></div>
+  </div>
+</div></section>
+
+<section id="guia"><div class="wrap">
+  <span class="chip">Guia · passo a passo</span>
+  <h2>A camada em 6 passos</h2>
+  <p class="sub">Primeiro clone o kit. Os comandos rodam dentro da pasta dele.</p>
+<pre><span class="k">git clone</span> <span class="s">https://github.com/inematds/camada-contexto</span>
+<span class="k">cd</span> camada-contexto</pre>
+  <div style="height:30px"></div>
+
+  <div class="passo">
+    <figure><img src="assets/02-duas-copias.jpg" alt="Ilustração: duas ilhas no céu, cada uma com uma cópia da mesma pasta, se afastando" loading="lazy"></figure>
+    <div><span class="num">1</span><h3>Entenda o problema das duas cópias</h3>
+      <p class="mut">Quando você sobe o contexto em cada app separado, nascem duas versões do seu negócio. Cada semana elas ficam um pouco mais diferentes, e quem guarda o seu contexto prende você ali.</p></div>
+  </div>
+
+  <div class="passo">
+    <figure><img src="assets/04-arquivo-dado.jpg" alt="Ilustração: estante de cadernos de um lado e painel vivo de tarefas do outro" loading="lazy"></figure>
+    <div><span class="num">2</span><h3>Separe arquivo de dado vivo</h3>
+      <p class="mut">Arquivo muda pouco: negócio, voz, público, decisões, skills. Isso é texto em markdown, no repositório. Dado vivo muda toda hora: tarefas, clientes, registros. Isso vai num banco na nuvem (como o Supabase), nunca numa pasta de arquivos.</p></div>
+  </div>
+
+  <div class="passo">
+    <figure><img src="assets/05-onde-guardar.jpg" alt="Ilustração: um cofre, uma mesa de edição em grupo e uma gaveta com lupa" loading="lazy"></figure>
+    <div><span class="num">3</span><h3>Escolha onde guardar</h3>
+      <p class="mut">Sozinho ou em equipe pequena: <b>GitHub</b>, grátis, privado e com histórico de cada mudança. Equipe não técnica: <b>Notion</b>, feito para várias pessoas editarem juntas. <b>Drive</b>: antes, confira se o conector do app consegue editar os arquivos, não só ler.</p></div>
+  </div>
+
+  <div class="passo">
+    <figure><img src="assets/06-montar.jpg" alt="Ilustração: o robô leva pastas do notebook para dentro de um cofre" loading="lazy"></figure>
+    <div><span class="num">4</span><h3>Monte o repositório privado</h3>
+      <p class="mut">Crie um repositório <b>privado</b> no GitHub. Gere a estrutura com o kit, preencha e confira antes de enviar. Se você já tem uma pasta de contexto, use o prompt para o agente copiar tudo no lugar certo.</p>
+<pre><span class="k">scripts/iniciar.sh</span> ~/minha-empresa-contexto
+<span class="k">python3</span> scripts/checar_contexto.py ~/minha-empresa-contexto
+<span class="c"># OK: 0 bloqueio(s) … — senha, banco de dados e planilha são barrados</span>
+<span class="k">cat</span> prompts/copiar-contexto.md</pre></div>
+  </div>
+
+  <div class="passo">
+    <figure><img src="assets/07-instrucoes.jpg" alt="Ilustração: dois robôs leem a mesma folha de instruções presa num quadro" loading="lazy"></figure>
+    <div><span class="num">5</span><h3>Ligue os dois apps com o mesmo bloco</h3>
+      <p class="mut">Conecte o GitHub no Claude e no ChatGPT/Codex e cole o mesmo bloco nas instruções do projeto de cada um: o repositório é a fonte da verdade, leia antes de agir, escreva na <code>main</code>, não apague sem perguntar, nunca grave senha.</p>
+<pre><span class="k">cat</span> instrucoes/bloco-projeto.md</pre></div>
+  </div>
+
+  <div class="passo">
+    <figure><img src="assets/09-memoria.jpg" alt="Ilustração: bilhetes saem de uma caixa de app e são arquivados em pastas" loading="lazy"></figure>
+    <div><span class="num">6</span><h3>Tire a memória de dentro do app</h3>
+      <p class="mut">O que a memória automática aprendeu com você não deve ficar presa lá. Regra vai para <code>contexto/regras.md</code>; passo de processo vai para uma skill; fato do negócio vai para o arquivo do negócio.</p>
+<pre><span class="k">cat</span> prompts/memoria-para-arquivos.md</pre></div>
+  </div>
+</div></section>
+
+<section id="teste"><div class="wrap">
+  <span class="chip">A prova</span>
+  <h2>O teste dos dois agentes</h2>
+  <p class="sub">Um cria, o outro edita. Se os dois conseguem, a ponte funciona nos dois sentidos.</p>
+  <div class="q">
+    <div class="card"><b>1</b><h3>O Codex cria</h3><p>Peça ao Codex para criar <code>entregas/teste-ponte.md</code> no repositório.</p></div>
+    <div class="card"><b>2</b><h3>O Claude edita</h3><p>Peça ao Claude para abrir o mesmo arquivo e acrescentar uma linha.</p></div>
+    <div class="card"><b>3</b><h3>Você confere</h3><p>O arquivo tem as duas linhas? Então os dois trabalham no mesmo contexto.</p></div>
+  </div>
+<pre style="margin-top:22px"><span class="k">cat</span> prompts/teste-dois-agentes.md</pre>
+  <figure style="margin:26px 0 0;border-radius:16px;overflow:hidden;border:1px solid var(--line)"><img src="assets/08-teste.jpg" alt="Ilustração: um robô escreve uma página, passa pelo cofre e o outro corrige" loading="lazy" style="width:100%;display:block"></figure>
+</div></section>
+
+<section id="video"><div class="wrap">
+  <span class="chip">Vídeo</span>
+  <h2>Assista à camada de contexto explicada</h2>
+  <p class="sub">O explicativo completo com as ilustrações e as telas animadas, e o reel curto para mandar a quem precisa.</p>
+  <div class="vid">
+    <div><video controls preload="none" poster="assets/poster.jpg" src="https://github.com/inematds/camada-contexto/releases/download/video-v1.0.0/camada-contexto-16x9.mp4"></video><p>Vídeo completo (16:9)</p></div>
+    <div class="reel"><video controls preload="none" poster="assets/poster-reel.jpg" src="https://github.com/inematds/camada-contexto/releases/download/video-v1.0.0/camada-contexto-reel.mp4"></video><p>Reel (9:16)</p></div>
+  </div>
+</div></section>
+
+<section id="arquivos"><div class="wrap">
+  <span class="chip">No repositório</span>
+  <h2>O que vem pronto</h2>
+  <div class="grid g4">
+    <div class="card"><h3>modelo/</h3><p>AGENTS.md, CLAUDE.md e a pasta contexto/ com negócio, voz, público, regras, decisões e skills.</p></div>
+    <div class="card"><h3>instrucoes/</h3><p>O bloco único para colar nos projetos do Claude e do ChatGPT/Codex.</p></div>
+    <div class="card"><h3>prompts/</h3><p>Copiar o contexto, o teste dos dois agentes e a memória para arquivos.</p></div>
+    <div class="card"><h3>scripts/</h3><p><code>iniciar.sh</code> cria a estrutura; <code>checar_contexto.py</code> barra senha e banco.</p></div>
+  </div>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <div class="pill">GitHub</div><div class="pill">Claude</div><div class="pill">Codex</div>
+    <p style="margin-top:18px">camada-contexto · kit grátis ·
+      <a href="https://github.com/inematds/camada-contexto">inematds/camada-contexto</a> ·
+      <a href="https://inema.club">INEMA.CLUB</a></p>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var KEY='camada-contexto-theme';
+    var b=document.body, t=document.getElementById('themeToggle');
+    if(localStorage.getItem(KEY)==='light'){ b.classList.add('light'); t.textContent='☀️'; }
+    t.addEventListener('click',function(){
+      var light=b.classList.toggle('light');
+      t.textContent=light?'☀️':'🌙';
+      localStorage.setItem(KEY, light?'light':'dark');
+    });
+  })();
+</script>
+</body>
+</html>

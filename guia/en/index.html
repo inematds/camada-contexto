@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>camada-contexto — your context in one place, readable by any AI</title>
+<meta name="description" content="Context layer: keep your business context in a private repository that Claude and Codex can read and write. Folder structure, one instruction block, prompts, and a checker. Free from INEMA.CLUB.">
+<link rel="alternate" hreflang="pt-BR" href="https://inematds.github.io/camada-contexto/guia/">
+<link rel="alternate" hreflang="en" href="https://inematds.github.io/camada-contexto/guia/en/">
+<link rel="alternate" hreflang="es" href="https://inematds.github.io/camada-contexto/guia/es/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0c10; --bg2:#14141b; --card:#16161e; --line:#272730;
+    --txt:#e9e9ee; --mut:#9a9aa6; --amb:#FACC15; --amb2:#fde68a; --sky:#38bdf8; --pro:#cbd5e1;
+    color-scheme:dark;
+  }
+  body.light{
+    --bg:#f6f7f9; --bg2:#eceef2; --card:#ffffff; --line:#e1e3ea;
+    --txt:#1a1a22; --mut:#5b5b68; --amb:#a16207; --amb2:#854d0e; --sky:#0369a1; --pro:#b45309;
+    color-scheme:light;
+  }
+  body.light .hero .glow{opacity:.5}
+  body.light pre{background:#0e0e14;color:#d6d6e0}
+  body.light pre .c{color:#8a8a98}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:Sora,sans-serif;line-height:1.15;margin:0}
+  a{color:var(--amb);text-decoration:none}
+  code,pre{font-family:"JetBrains Mono",monospace}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+  .mut{color:var(--mut)} .amb{color:var(--amb)}
+  .chip{display:inline-block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amb);font-weight:600;font-family:Sora}
+  nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(12px);background:rgba(12,12,16,.78);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;gap:22px;height:60px}
+  nav .brand{display:flex;align-items:center;gap:8px;font-family:Sora;font-weight:800;letter-spacing:-.02em;color:var(--amb)}
+  nav .brand .emoji{font-size:1.25rem}
+  nav .sep{color:var(--mut);opacity:.45}
+  nav .inema{color:var(--sky);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .inema:hover{filter:brightness(1.15)}
+  nav .pro{color:var(--pro);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .pro:hover{filter:brightness(1.15)}
+  nav .clubpro{display:inline-flex;align-items:center;gap:6px}
+  nav .links{margin-left:auto;display:flex;align-items:center;gap:20px;font-size:.92rem}
+  nav .links a.sec{color:var(--mut)} nav .links a.sec:hover{color:var(--txt)}
+  .lang{display:inline-flex;gap:2px;font-family:Sora;font-size:.78rem}
+  .lang a{color:var(--mut);padding:.2em .45em;border-radius:6px} .lang a.on{color:var(--amb);background:rgba(250,204,21,.12)}
+  .tgl{background:var(--bg2);border:1px solid var(--line);color:var(--txt);width:38px;height:38px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem}
+  .tgl:hover{border-color:var(--amb)}
+  .btn{display:inline-block;background:var(--amb);color:#1a1206;font-weight:600;padding:.6em 1.05em;border-radius:10px;font-family:Sora}
+  .btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  @media(max-width:760px){nav .links a.sec{display:none}}
+  @media(max-width:520px){nav .wrap{gap:8px;padding:8px 14px;height:auto;flex-wrap:wrap} nav .links{gap:8px;margin-left:0;width:100%;justify-content:space-between} nav .btn{padding:.45em .7em;font-size:.82rem} .tgl{width:34px;height:34px}}
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero .glow{position:absolute;inset:-40% -20% auto auto;width:70%;height:600px;background:radial-gradient(closest-side,rgba(250,204,21,.22),transparent 70%);pointer-events:none}
+  .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:74px 22px}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.5rem);font-weight:800;letter-spacing:-.025em}
+  .hero p.lead{font-size:1.18rem;color:var(--mut);margin:1.1em 0 1.6em;max-width:34ch}
+  .hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+  .hero figure{margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000}
+  .hero figure img{width:100%;display:block}
+  .resumo{padding:38px 0 34px;border-bottom:1px solid var(--line)}
+  .resumo p{font-size:1.12rem;line-height:1.7;max-width:74ch;margin:.55em 0 0}
+  @media(max-width:780px){.hero .wrap{grid-template-columns:1fr;padding:48px 22px}}
+  section{padding:62px 0;border-bottom:1px solid var(--line)}
+  section h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800;letter-spacing:-.02em}
+  section .sub{color:var(--mut);margin:.6em 0 2em;max-width:62ch}
+  .grid{display:grid;gap:16px}
+  .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:820px){.g3,.g4{grid-template-columns:1fr 1fr}}
+  @media(max-width:540px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .card h3{font-size:1.05rem;margin-bottom:.4em}
+  .card p{color:var(--mut);font-size:.92rem;margin:0}
+  .num{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:8px;background:rgba(250,204,21,.14);color:var(--amb);font-family:Sora;font-weight:800;font-size:.9rem;margin-bottom:.7em}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+  .flow span{background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:.45em .9em;font-size:.85rem;font-family:Sora;font-weight:600}
+  .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
+  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.86rem;line-height:1.6;color:#d6d6e0}
+  pre .c{color:#6f6f7c} pre .k{color:var(--amb2)} pre .s{color:#9ece6a}
+  .step{display:grid;grid-template-columns:46px minmax(0,1fr);gap:16px;margin-bottom:26px}
+  .step>div,.card{min-width:0}
+  p code,li code,td code{overflow-wrap:anywhere}
+  .step .b{width:46px;height:46px;border-radius:12px;background:var(--amb);color:#1a1206;font-family:Sora;font-weight:800;font-size:1.25rem;display:flex;align-items:center;justify-content:center}
+  .step h3{font-size:1.12rem;margin-bottom:.3em}
+  .step p{color:var(--mut);margin:.2em 0 .7em}
+  .ex{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:680px){.ex{grid-template-columns:1fr}}
+  .ex figure{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+  .ex figure img{width:100%;display:block}
+  .ex figcaption{padding:12px 14px;font-size:.88rem;color:var(--mut);background:var(--card)}
+  .phase{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .phase:last-child{border:none}
+  .phase .tag{flex:0 0 92px;font-family:Sora;font-weight:800;color:var(--amb)}
+  .phase .d strong{display:block;margin-bottom:.2em}
+  .phase .d span{color:var(--mut);font-size:.92rem}
+  footer{padding:46px 0;text-align:center;color:var(--mut);font-size:.9rem}
+  .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.3em .8em;font-size:.78rem;color:var(--mut);margin:0 4px}
+</style>
+</head>
+<body>
+<style>
+  .passo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:center;margin:0 0 44px}
+  .passo figure{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+  .passo figure img{width:100%;display:block}
+  .passo:nth-of-type(even) figure{order:2}
+  @media(max-width:820px){.passo{grid-template-columns:minmax(0,1fr)}.passo:nth-of-type(even) figure{order:0}}
+  .q{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:820px){.q{grid-template-columns:1fr}}
+  .q .card b{display:block;font:800 2.2rem Sora;color:var(--amb);line-height:1;margin-bottom:.3em}
+  .vid{display:grid;grid-template-columns:1.6fr 1fr;gap:18px;align-items:start}
+  @media(max-width:820px){.vid{grid-template-columns:1fr}}
+  .vid video{width:100%;border-radius:14px;border:1px solid var(--line);background:#000;display:block}
+  .vid .reel video{max-width:360px;margin:0 auto}
+  .vid p{color:var(--mut);font-size:.9rem;margin:.5em 0 0}
+  @media(max-width:900px){nav .links a.sec{display:none}}
+  .vid>div,.q>div{min-width:0}
+</style>
+
+<nav><div class="wrap">
+  <a class="brand" href="#top"><span class="emoji">🗄️</span> camada-contexto</a>
+  <span class="sep">|</span>
+  <span class="clubpro">
+    <a class="inema" href="https://inema.club" target="_blank" rel="noopener">INEMA.CLUB</a>
+    <span class="sep">-</span>
+    <a class="pro" href="https://inema.pro" target="_blank" rel="noopener">PRO</a>
+  </span>
+  <div class="links">
+    <a class="sec" href="#oque">What it is</a>
+    <a class="sec" href="#guia">Steps</a>
+    <a class="sec" href="#teste">Test</a>
+    <a class="sec" href="#video">Video</a>
+    <span class="lang"><a href="../">PT</a><a class="on" href="./">EN</a><a href="../es/">ES</a></span>
+    <button class="tgl" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">🌙</button>
+    <a class="btn" href="https://github.com/inematds/camada-contexto" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</div></nav>
+
+<header class="hero" id="top">
+  <div class="glow"></div>
+  <div class="wrap">
+    <div>
+      <span class="chip">Claude + Codex · one shared context</span>
+      <h1>Your context in one place that is <span class="amb">yours</span></h1>
+      <p class="lead">Claude, Codex, or the next model all work with the same context. When a better AI comes along, just plug it in.</p>
+      <div class="cta">
+        <a class="btn" href="#guia">Build my context layer</a>
+        <a class="btn ghost" href="https://github.com/inematds/camada-contexto" target="_blank" rel="noopener">View on GitHub</a>
+      </div>
+    </div>
+    <figure><img src="../assets/banner-en.jpg" alt="Banner: context layer — your business in one place, readable by any AI"></figure>
+  </div>
+</header>
+
+<section id="resumo" class="resumo"><div class="wrap">
+  <span class="chip">In a nutshell</span>
+  <p>This is a free kit for keeping your business context (what you do, your voice, your audience, your rules) in a private repository that belongs to you, rather than inside an AI app. Claude and ChatGPT/Codex read and write in the same place, so you avoid diverging copies and dependence on one company. The kit includes a folder structure, one instruction block for both apps, ready-to-use prompts, and a checker that blocks passwords and databases before upload. All you need is a free GitHub account and Claude or ChatGPT.</p>
+</div></section>
+
+<section id="oque"><div class="wrap">
+  <span class="chip">What it is</span>
+  <h2>Three layers; one belongs to you</h2>
+  <p class="sub">AI apps now work in their own cloud. Great for always-on access; a problem when your context gets stuck there.</p>
+  <figure style="margin:0 0 26px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000"><img src="../assets/banner-grade-en.jpg" alt="The steps: three layers, files and data, where to keep them, set up, connect both apps, and test" loading="lazy" style="width:100%;display:block"></figure>
+  <div class="grid g3">
+    <div class="card"><h3>🤖 Top: the AI</h3><p>Where the work runs: Claude, Codex, or the next AI. It changes; the rest stays.</p></div>
+    <div class="card"><h3>🌉 Middle: the bridge</h3><p>Git, MCP connector, or API. Each app needs its own permission to connect.</p></div>
+    <div class="card"><h3>🗄️ Bottom: what belongs to you</h3><p>Your business files in a private repository. Change the AI; keep the source.</p></div>
+  </div>
+</div></section>
+
+<section id="guia"><div class="wrap">
+  <span class="chip">Guide · step by step</span>
+  <h2>Build your layer in 6 steps</h2>
+  <p class="sub">First clone the kit. Run the commands from inside its folder.</p>
+<pre><span class="k">git clone</span> <span class="s">https://github.com/inematds/camada-contexto</span>
+<span class="k">cd</span> camada-contexto</pre>
+  <div style="height:30px"></div>
+
+  <div class="passo">
+    <figure><img src="../assets/02-duas-copias.jpg" alt="Illustration: two islands in the sky, each with a copy of the same folder, drifting apart" loading="lazy"></figure>
+    <div><span class="num">1</span><h3>Understand the problem with two copies</h3>
+      <p class="mut">When you upload your context separately to each app, two versions of your business emerge. They drift further apart each week, and whoever holds your context keeps you tied to them.</p></div>
+  </div>
+
+  <div class="passo">
+    <figure><img src="../assets/04-arquivo-dado.jpg" alt="Illustration: a shelf of notebooks on one side and a live task board on the other" loading="lazy"></figure>
+    <div><span class="num">2</span><h3>Separate files from live data</h3>
+      <p class="mut">Files change little: business, voice, audience, decisions, skills. Keep them as markdown in the repository. Live data changes constantly: tasks, clients, records. Put it in a cloud database (such as Supabase), never in a folder of files.</p></div>
+  </div>
+
+  <div class="passo">
+    <figure><img src="../assets/05-onde-guardar.jpg" alt="Illustration: a vault, a shared editing desk, and a drawer with a magnifying glass" loading="lazy"></figure>
+    <div><span class="num">3</span><h3>Choose where to keep it</h3>
+      <p class="mut">On your own or in a small team: <b>GitHub</b>, free, private, with a history of every change. Non-technical team: <b>Notion</b>, built for people to edit together. <b>Drive</b>: first check that the app connector can edit files, not just read them.</p></div>
+  </div>
+
+  <div class="passo">
+    <figure><img src="../assets/06-montar.jpg" alt="Illustration: a robot carries folders from a laptop into a vault" loading="lazy"></figure>
+    <div><span class="num">4</span><h3>Set up the private repository</h3>
+      <p class="mut">Create a <b>private</b> repository on GitHub. Generate its structure with the kit, fill it in, and check it before uploading. If you already have a context folder, use the prompt to have an agent copy everything to the right place.</p>
+<pre><span class="k">scripts/iniciar.sh</span> ~/minha-empresa-contexto
+<span class="k">python3</span> scripts/checar_contexto.py ~/minha-empresa-contexto
+<span class="c"># OK: 0 block(s) … — passwords, databases, and spreadsheets are blocked</span>
+<span class="k">cat</span> prompts/copiar-contexto.md</pre></div>
+  </div>
+
+  <div class="passo">
+    <figure><img src="../assets/07-instrucoes.jpg" alt="Illustration: two robots read the same instruction sheet pinned to a board" loading="lazy"></figure>
+    <div><span class="num">5</span><h3>Connect both apps with the same block</h3>
+      <p class="mut">Connect GitHub in Claude and ChatGPT/Codex, then paste the same block into each app’s project instructions: the repository is the source of truth, read before acting, write on <code>main</code>, ask before deleting, and never save passwords.</p>
+<pre><span class="k">cat</span> instrucoes/bloco-projeto.md</pre></div>
+  </div>
+
+  <div class="passo">
+    <figure><img src="../assets/09-memoria.jpg" alt="Illustration: notes leave an app box and are filed into folders" loading="lazy"></figure>
+    <div><span class="num">6</span><h3>Move memory out of the app</h3>
+      <p class="mut">What automatic memory has learned about you should not stay trapped there. Put rules in <code>contexto/regras.md</code>; process steps in a skill; business facts in the business file.</p>
+<pre><span class="k">cat</span> prompts/memoria-para-arquivos.md</pre></div>
+  </div>
+</div></section>
+
+<section id="teste"><div class="wrap">
+  <span class="chip">The proof</span>
+  <h2>The two-agent test</h2>
+  <p class="sub">One creates, the other edits. If both can do it, the bridge works in both directions.</p>
+  <div class="q">
+    <div class="card"><b>1</b><h3>Codex creates</h3><p>Ask Codex to create <code>entregas/teste-ponte.md</code> in the repository.</p></div>
+    <div class="card"><b>2</b><h3>Claude edits</h3><p>Ask Claude to open the same file and add a line.</p></div>
+    <div class="card"><b>3</b><h3>You check</h3><p>Does the file have both lines? Then both agents are working with the same context.</p></div>
+  </div>
+<pre style="margin-top:22px"><span class="k">cat</span> prompts/teste-dois-agentes.md</pre>
+  <figure style="margin:26px 0 0;border-radius:16px;overflow:hidden;border:1px solid var(--line)"><img src="../assets/08-teste.jpg" alt="Illustration: one robot writes a page, sends it through a vault, and the other edits it" loading="lazy" style="width:100%;display:block"></figure>
+</div></section>
+
+<section id="video"><div class="wrap">
+  <span class="chip">Video</span>
+  <h2>Watch the context layer explained</h2>
+  <p class="sub">The full explainer with illustrations and animated screens, plus a short reel to share with someone who needs it.</p>
+  <div class="vid">
+    <div><video controls preload="none" poster="../assets/poster.jpg" src="https://github.com/inematds/camada-contexto/releases/download/video-v1.0.0/camada-contexto-16x9.mp4"></video><p>Full video (16:9)</p></div>
+    <div class="reel"><video controls preload="none" poster="../assets/poster-reel.jpg" src="https://github.com/inematds/camada-contexto/releases/download/video-v1.0.0/camada-contexto-reel.mp4"></video><p>Reel (9:16)</p></div>
+  </div>
+</div></section>
+
+<section id="arquivos"><div class="wrap">
+  <span class="chip">In the repository</span>
+  <h2>What’s included</h2>
+  <div class="grid g4">
+    <div class="card"><h3>modelo/</h3><p>AGENTS.md, CLAUDE.md, and the contexto/ folder with business, voice, audience, rules, decisions, and skills.</p></div>
+    <div class="card"><h3>instrucoes/</h3><p>The single block to paste into Claude and ChatGPT/Codex projects.</p></div>
+    <div class="card"><h3>prompts/</h3><p>Copy the context, run the two-agent test, and move memory into files.</p></div>
+    <div class="card"><h3>scripts/</h3><p><code>iniciar.sh</code> creates the structure; <code>checar_contexto.py</code> blocks passwords and databases.</p></div>
+  </div>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <div class="pill">GitHub</div><div class="pill">Claude</div><div class="pill">Codex</div>
+    <p style="margin-top:18px">camada-contexto · free kit ·
+      <a href="https://github.com/inematds/camada-contexto">inematds/camada-contexto</a> ·
+      <a href="https://inema.club">INEMA.CLUB</a></p>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var KEY='camada-contexto-theme';
+    var b=document.body, t=document.getElementById('themeToggle');
+    if(localStorage.getItem(KEY)==='light'){ b.classList.add('light'); t.textContent='☀️'; }
+    t.addEventListener('click',function(){
+      var light=b.classList.toggle('light');
+      t.textContent=light?'☀️':'🌙';
+      localStorage.setItem(KEY, light?'light':'dark');
+    });
+  })();
+</script>
+</body>
+</html>
